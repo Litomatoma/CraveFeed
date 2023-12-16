@@ -1,12 +1,12 @@
 import { initTRPC } from '@trpc/server';
-import { Prisma, PrismaClient } from '@prisma/client'; 
+import { PrismaClient } from '@prisma/client'; 
 
 const prisma = new PrismaClient()
 /**
  * Initialization of tRPC backend
  * Should be done only once per backend!
  */
-const t = initTRPC.context< prisma: {User: typeof prisma.user}>().create();
+const t = initTRPC.create();
  
 /**
  * Export reusable router and procedure helpers
