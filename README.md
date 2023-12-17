@@ -29,9 +29,12 @@ CraveFeed is a delectable social media app for food enthusiasts. Powered by NEXT
    
    ```bash
    DATABASE_URL=postgresql://{username}:{password}@localhost:5432/{db_name}?schema=public
-   
-   
-  Replace {username}, {password}, and {db_name} with your PostgreSQL credentials.
+
+4. **Setting Up Backend Server:**
+        Exclude client from tsconfig , then run :-
+
+   ```bash
+   tsc -b
 
 ## Contributing
 
