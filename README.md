@@ -1,4 +1,4 @@
-# FoodieGram
+# CraveFeed
 
 
 CraveFeed is a delectable social media app for food enthusiasts. Powered by NEXT.js for a sleek frontend, tRPC for a dynamic backend, and PostgreSQL with Prisma for robust data management. Users can share, discover, and engage with food-related content through posts, comments, and likes. CraveFeed is the go-to platform for building a community around the shared love for all things food. Join us, where cravings meet creativity!
