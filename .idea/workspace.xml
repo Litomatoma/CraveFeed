@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b2254706-e255-4d6b-ad33-85a8296ee344" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/migrations/20231218165641_init/migration.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/migrations/20240104004716_init/migration.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/migrations/migration_lock.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/trpc.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/trpc.ts" afterDir="false" />
-    </list>
+    <list default="true" id="b2254706-e255-4d6b-ad33-85a8296ee344" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -64,6 +58,7 @@
       <workItem from="1704324251888" duration="4310000" />
       <workItem from="1704330816777" duration="556000" />
       <workItem from="1704334979393" duration="544000" />
+      <workItem from="1704335547273" duration="211000" />
     </task>
     <servers />
   </component>
