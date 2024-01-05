@@ -210,6 +210,31 @@ export const userRouter = router({
             });
             return userPosts;
         }),
-
+    addCommentToPost: publicProcedure
+        .input(z.object({
+            userId: z.number(),
+            postId: z.number(),
+            text: z.string(),
+        }))
+        .mutation(async (opts) => {
+            const { userId, postId, text } = opts.input;
+            const user = await opts.ctx.prisma.User.findUnique({ //Can be removed
+                where: { id: userId },
+            });
+            const post = await opts.ctx.prisma.Post.findUnique({ //Can be removed
+                where: { id: postId },
+            });
+            if (!user || !post) {
+                throw new Error("User or post not found");
+            }
+            const newComment = await opts.ctx.prisma.Comment.create({
+                data: {
+                    userId,
+                    postId,
+                    text,
+                },
+            });
+            return newComment;
+        }),
 
 })

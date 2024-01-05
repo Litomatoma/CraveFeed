@@ -10,6 +10,7 @@ const createContext = () => ({
         User: prisma.user,
         Post: prisma.post,
         Like: prisma.like,
+        Comment: prisma.comment,
     }
   });
 

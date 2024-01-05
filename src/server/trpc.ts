@@ -11,6 +11,7 @@ const t = initTRPC.context<{ prisma: {
     User : typeof prisma.user,
     Post: typeof prisma.post,
     Like: typeof prisma.like,
+    Comment: typeof prisma.comment,
     } ; username?: string; }>().create();
  
 /**
