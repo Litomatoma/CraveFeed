@@ -36,13 +36,21 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+<<<<<<< HEAD
     &quot;git-widget-placeholder&quot;: &quot;fix&quot;,
+=======
+    &quot;git-widget-placeholder&quot;: &quot;sps&quot;,
+>>>>>>> sps
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+<<<<<<< HEAD
     &quot;ts.external.directory.path&quot;: &quot;/Users/surendraprasadsingh/Desktop/CraveFeed/node_modules/typescript/lib&quot;,
+=======
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\shash\\Desktop\\CraveFeed\\node_modules\\typescript\\lib&quot;,
+>>>>>>> sps
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -58,6 +66,7 @@
       <workItem from="1704324251888" duration="4310000" />
       <workItem from="1704330816777" duration="556000" />
       <workItem from="1704334979393" duration="544000" />
+<<<<<<< HEAD
       <workItem from="1704375098875" duration="2241000" />
       <workItem from="1704413316668" duration="1204000" />
       <workItem from="1704414794038" duration="876000" />
@@ -66,6 +75,9 @@
       <workItem from="1704427553396" duration="1924000" />
       <workItem from="1704430847202" duration="104000" />
       <workItem from="1704431005778" duration="5657000" />
+=======
+      <workItem from="1704335547273" duration="211000" />
+>>>>>>> sps
     </task>
     <servers />
   </component>
