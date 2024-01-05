@@ -190,5 +190,26 @@ export const userRouter = router({
             });
             return userPosts;
         }),
+    getPosts: publicProcedure
+        .input(z.object({
+            userId: z.number(),
+        }))
+        .query(async (opts) => {
+            const { userId } = opts.input;
+            const userPosts = await opts.ctx.prisma.Post.findMany({
+                where: {
+                    userId: {
+                        not: userId,
+                    },
+                },
+                include: {
+                    Likes: true,
+                    Comments: true,
+                },
+                take: 10, //No of posts to take change accordingly
+            });
+            return userPosts;
+        }),
+
 
 })
