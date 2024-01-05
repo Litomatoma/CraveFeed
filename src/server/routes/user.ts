@@ -148,5 +148,47 @@ export const userRouter = router({
 
             return { following };
         }),
+    newPost: publicProcedure
+        .input(z.object({
+            userId: z.number(),
+            restaurantName: z.string(),
+            cityName: z.string(),
+            dishName: z.string(),
+            caption: z.string(),
+            image: z.string(),
+            location: z.string(),
+        }))
+        .mutation(async (opts) => {
+            let {userId,restaurantName,cityName,dishName,caption,image,location} = opts.input;
+
+            await opts.ctx.prisma.Post.create({
+                data: {
+                    userId,
+                    restuarant : restaurantName,
+                    dish: dishName,
+                    city: cityName,
+                    caption,
+                    image,
+                    Location: location,
+                },
+            });
+        }),
+    getUserPosts: publicProcedure
+        .input(z.object({
+            userId: z.number(),
+        }))
+        .query(async (opts) => {
+            const { userId } = opts.input;
+            const userPosts = await opts.ctx.prisma.Post.findMany({
+                where: {
+                    userId: userId,
+                },
+                include: {
+                    Likes: true,
+                    Comments: true,
+                },
+            });
+            return userPosts;
+        }),
 
 })

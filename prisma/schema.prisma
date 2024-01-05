@@ -28,49 +28,51 @@ model Post {
   id              Int               @id @default(autoincrement())
   User            User              @relation(fields: [userId], references: [id])
   userId          Int
-  restaurantId    Int // Foreign key referencing Restaurant table
-  dishId          Int // Foreign key referencing Dish table
-  cityId          Int // Foreign key referencing City table
+  // restaurantId    Int // Foreign key referencing Restaurant table
+  // dishId          Int // Foreign key referencing Dish table
+  // cityId          Int // Foreign key referencing City table
+  restuarant      String
+  dish            String
+  city            String
   caption         String?
   image           String?
-  createAt        DateTime?
+  Location        String?
   Likes           Like[]
   Comments        Comment[]
-  Restaurant      Restaurant        @relation(fields: [restaurantId], references: [id])
-  Dish            Dish              @relation(fields: [dishId], references: [id])
-  City            City              @relation(fields: [cityId], references: [id])
+  // Restaurant      Restaurant        @relation(fields: [restaurantId], references: [id])
+  // Dish            Dish              @relation(fields: [dishId], references: [id])
+  // City            City              @relation(fields: [cityId], references: [id])
   Leaderboard     Leaderboard[]
-  CityLeaderboard CityLeaderboard[]
 }
 
-model Restaurant {
-  id          Int     @id @default(autoincrement())
-  name        String
-  location    String
-  description String?
-  image       String?
-  Posts       Post[]
-  City        City?   @relation(fields: [cityId], references: [id])
-  cityId      Int?
-}
-
-model Dish {
-  id          Int     @id @default(autoincrement())
-  name        String
-  description String?
-  image       String?
-  Posts       Post[]
-}
+// model Restaurant {
+//   id          Int     @id @default(autoincrement())
+//   name        String
+//   location    String
+//   // description String?
+//   // image       String?
+//   Posts       Post[]
+//   City        City?   @relation(fields: [cityId], references: [id])
+//   cityId      Int?
+// }
+//
+// model Dish {
+//   id          Int     @id @default(autoincrement())
+//   name        String
+//   // description String?
+//   // image       String?
+//   Posts       Post[]
+// }
 
 // City model representing cities in the system
-model City {
-  id              Int               @id @default(autoincrement())
-  name            String
-  country         String
-  Restaurants     Restaurant[]
-  Posts           Post[]
-  CityLeaderboard CityLeaderboard[]
-}
+// model City {
+//   id              Int               @id @default(autoincrement())
+//   name            String
+//   country         String
+//   Restaurants     Restaurant[]
+//   Posts           Post[]
+//   CityLeaderboard CityLeaderboard[]
+// }
 
 // Follower model representing followers in the system
 model Follower {
@@ -81,7 +83,6 @@ model Follower {
   FollowingUser User     @relation("following", fields: [followingId], references: [id])
 }
 
-// Like model representing likes in the system
 model Like {
   id     Int  @id @default(autoincrement())
   userId Int // Foreign key referencing User table
@@ -90,7 +91,6 @@ model Like {
   Post   Post @relation(fields: [postId], references: [id])
 }
 
-// Comment model representing comments in the system
 model Comment {
   id     Int    @id @default(autoincrement())
   userId Int // Foreign key referencing User table
@@ -105,15 +105,5 @@ model Leaderboard {
   id     Int  @id @default(autoincrement())
   postId Int // Foreign key referencing Post table
   score  Int
-  Post   Post @relation(fields: [postId], references: [id])
-}
-
-// CityLeaderboard model representing the city-specific leaderboard
-model CityLeaderboard {
-  id     Int  @id @default(autoincrement())
-  cityId Int // Foreign key referencing City table
-  postId Int // Foreign key referencing Post table
-  score  Int
-  City   City @relation(fields: [cityId], references: [id])
   Post   Post @relation(fields: [postId], references: [id])
 }

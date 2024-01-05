@@ -8,7 +8,8 @@ const createContext = () => ({
     prisma: {
         Follower : prisma.follower,
         User: prisma.user,
-
+        Post: prisma.post,
+        Like: prisma.like,
     }
   });
 

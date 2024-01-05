@@ -9,7 +9,8 @@ const prisma = new PrismaClient()
 const t = initTRPC.context<{ prisma: {
     Follower : typeof prisma.follower,
     User : typeof prisma.user,
-
+    Post: typeof prisma.post,
+    Like: typeof prisma.like,
     } ; username?: string; }>().create();
  
 /**
