@@ -11,53 +11,109 @@ datasource db {
 }
 
 model User {
-  id              Int             @id @default(autoincrement())
-  email           String          @unique
-  username        String          @unique
-  password        String
-  profilepicture  String?
-  bio             String?
-  Posts           Post[]
-  Likes           Like[]
-  Comments        Comment[]
+  id             Int        @id @default(autoincrement())
+  email          String     @unique
+  username       String     @unique
+  password       String
+  profilepicture String?
+  bio            String?
+  Posts          Post[]
+  Likes          Like[]
+  Comments       Comment[]
+  Followers      Follower[] @relation("follower")
+  Following      Follower[] @relation("following")
 }
 
 model Post {
-  id              Int          @id @default(autoincrement())
-  User            User         @relation(fields: [userId] , references: [id])
-  caption         String?
-  image           Bytes?
+  id              Int               @id @default(autoincrement())
+  User            User              @relation(fields: [userId], references: [id])
   userId          Int
-  createAt        DateTime?     
+  restaurantId    Int // Foreign key referencing Restaurant table
+  dishId          Int // Foreign key referencing Dish table
+  cityId          Int // Foreign key referencing City table
+  caption         String?
+  image           String?
+  createAt        DateTime?
   Likes           Like[]
   Comments        Comment[]
+  Restaurant      Restaurant        @relation(fields: [restaurantId], references: [id])
+  Dish            Dish              @relation(fields: [dishId], references: [id])
+  City            City              @relation(fields: [cityId], references: [id])
+  Leaderboard     Leaderboard[]
+  CityLeaderboard CityLeaderboard[]
 }
 
-model Like{
-  id              Int           @id @default(autoincrement())
-  User            User          @relation(fields: [userId] , references: [id])
-  userId          Int
-  Posts           Post          @relation(fields: [postId] , references: [id])
-  postId          Int         
-  createdAt       DateTime?
+model Restaurant {
+  id          Int     @id @default(autoincrement())
+  name        String
+  location    String
+  description String?
+  image       String?
+  Posts       Post[]
+  City        City?   @relation(fields: [cityId], references: [id])
+  cityId      Int?
 }
 
+model Dish {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  image       String?
+  Posts       Post[]
+}
+
+// City model representing cities in the system
+model City {
+  id              Int               @id @default(autoincrement())
+  name            String
+  country         String
+  Restaurants     Restaurant[]
+  Posts           Post[]
+  CityLeaderboard CityLeaderboard[]
+}
+
+// Follower model representing followers in the system
+model Follower {
+  id            Int      @id @default(autoincrement())
+  followerId    Int // Foreign key referencing User table
+  followingId   Int // Foreign key referencing User table
+  User          User     @relation("follower", fields: [followerId], references: [id])
+  FollowingUser User     @relation("following", fields: [followingId], references: [id])
+}
+
+// Like model representing likes in the system
+model Like {
+  id     Int  @id @default(autoincrement())
+  userId Int // Foreign key referencing User table
+  postId Int // Foreign key referencing Post table
+  User   User @relation(fields: [userId], references: [id])
+  Post   Post @relation(fields: [postId], references: [id])
+}
+
+// Comment model representing comments in the system
 model Comment {
-  id              Int           @id @default(autoincrement())
-  User            User          @relation(fields: [userId] , references: [id])
-  userId          Int
-  Posts           Post          @relation(fields: [postId] , references: [id])
-  postId          Int
+  id     Int    @id @default(autoincrement())
+  userId Int // Foreign key referencing User table
+  postId Int // Foreign key referencing Post table
+  text   String
+  User   User   @relation(fields: [userId], references: [id])
+  Post   Post   @relation(fields: [postId], references: [id])
 }
 
-// model Following {
-//   id              Int            @id @default(autoincrement())
-//   following       User           @relation(fields: [followingId] , references: [id])
-//   followingId     Int             
-// }
+// Leaderboard model representing the overall leaderboard
+model Leaderboard {
+  id     Int  @id @default(autoincrement())
+  postId Int // Foreign key referencing Post table
+  score  Int
+  Post   Post @relation(fields: [postId], references: [id])
+}
 
-// model Followers {
-//   id              Int            @id @default(autoincrement())
-//   follower        User           @relation(fields: [followerId], references: [id])
-//   followerId      Int
-// }
+// CityLeaderboard model representing the city-specific leaderboard
+model CityLeaderboard {
+  id     Int  @id @default(autoincrement())
+  cityId Int // Foreign key referencing City table
+  postId Int // Foreign key referencing Post table
+  score  Int
+  City   City @relation(fields: [cityId], references: [id])
+  Post   Post @relation(fields: [postId], references: [id])
+}

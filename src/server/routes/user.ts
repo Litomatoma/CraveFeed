@@ -6,30 +6,147 @@ export const userRouter = router({
     signUp: publicProcedure
         .input(z.object({
             username : z.string() ,
-            password : z.string() ,
-            bio : z.string() ,
-            email: z.string()
+            email: z.string() ,
+            password : z.string()
         }))
         .mutation(async (opts) =>
         {
             let username = opts.input.username;
             let password = opts.input.password;
-            let bio = opts.input.bio;
-            let email = opts.input.email
+            let email = opts.input.email;
 
-            await opts.ctx.prisma.User.create({
+            const newUser = await opts.ctx.prisma.User.create({
                 data : {
                     email ,
                     username ,
                     password ,
-                    bio
                 }
             })
+            return { id: newUser.id };
         }) ,
-        
-        dummyResponse : publicProcedure
-        .query( async () =>
+    signedUp: publicProcedure
+        .input(z.object({
+            id : z.number() ,
+            bio : z.string() ,
+            profilepicture : z.string()
+        }))
+        .mutation(async (opts) =>
         {
-            return [1 ,2 ,3]
-        })
+            let id = opts.input.id;
+            let bio = opts.input.bio;
+            let profilepicture = opts.input.profilepicture;
+
+            await opts.ctx.prisma.User.update({
+                where: {
+                    id: id,
+                },
+                data: {
+                    bio: bio,
+                    profilepicture: profilepicture
+                },
+            })
+        }) ,
+    follow: publicProcedure
+        .input(z.object({
+            followerId: z.number(),
+            followingId: z.number(),
+        }))
+        .mutation(async (opts) => {
+            const { followerId, followingId } = opts.input;
+
+            // Check if the users exist
+            const [follower, following] = await Promise.all([
+                opts.ctx.prisma.User.findUnique({ where: { id: followerId } }),
+                opts.ctx.prisma.User.findUnique({ where: { id: followingId } }),
+            ]);
+
+            if (!follower || !following) {
+                throw new Error('Invalid user IDs.');
+            }
+
+            // Check if the relationship already exists
+            const existingRelation = await opts.ctx.prisma.Follower.findFirst({
+                where: {
+                    followerId,
+                    followingId,
+                },
+            });
+
+            if (existingRelation) {
+                throw new Error('Already following this user.');
+            }
+            await opts.ctx.prisma.Follower.create({
+                data: {
+                    followerId,
+                    followingId,
+                },
+            });
+
+            return { success: true }; // To test the code remove later
+        }),
+
+    unfollow: publicProcedure
+        .input(z.object({
+            followerId: z.number(),
+            followingId: z.number(),
+        }))
+        .mutation(async (opts) => {
+            const { followerId, followingId } = opts.input;
+
+            const [follower, following] = await Promise.all([
+                opts.ctx.prisma.User.findUnique({ where: { id: followerId } }),
+                opts.ctx.prisma.User.findUnique({ where: { id: followingId } }),
+            ]);
+
+            if (!follower || !following) {
+                throw new Error('Invalid user IDs.');
+            }
+            const existingRelation = await opts.ctx.prisma.Follower.findFirst({
+                where: {
+                    followerId,
+                    followingId,
+                },
+            });
+
+            if (!existingRelation) {
+                throw new Error('Not following this user.');
+            }
+            await opts.ctx.prisma.Follower.delete({
+                where: {
+                    id: existingRelation.id,
+                },
+            });
+            return { success: true }; // To test the code remove later
+        }),
+    getfollowers: publicProcedure
+        .input(z.object({
+            Id: z.number(),
+        }))
+        .mutation(async (opts) => {
+            let userId = opts.input.Id;
+
+            const followers = await opts.ctx.prisma.Follower.findMany({
+                where: {
+                    followingId: userId,
+                },
+            });
+
+            return { followers };
+        }),
+    getfollowing: publicProcedure
+        .input(z.object({
+            Id: z.number(),
+        }))
+        .mutation(async (opts) => {
+            let userId = opts.input.Id;
+
+            const following = await opts.ctx.prisma.Follower.findMany({
+                where: {
+                    followerId: userId,
+                },
+            });
+
+            return { following };
+        }),
+
 })

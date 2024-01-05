@@ -5,7 +5,11 @@ import { PrismaClient } from "@prisma/client";
 let prisma = new PrismaClient
 
 const createContext = () => ({
-    prisma: { User : prisma.user}
+    prisma: {
+        Follower : prisma.follower,
+        User: prisma.user,
+
+    }
   });
 
 

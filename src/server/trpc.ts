@@ -6,7 +6,11 @@ const prisma = new PrismaClient()
  * Initialization of tRPC backend
  * Should be done only once per backend!
  */
-const t = initTRPC.context<{ prisma: {User : typeof prisma.user} ; username?: string; }>().create();
+const t = initTRPC.context<{ prisma: {
+    Follower : typeof prisma.follower,
+    User : typeof prisma.user,
+
+    } ; username?: string; }>().create();
  
 /**
  * Export reusable router and procedure helpers
@@ -15,3 +19,4 @@ const t = initTRPC.context<{ prisma: {User : typeof prisma.user} ; username?: st
 export const router = t.router;
 export const publicProcedure = t.procedure;
 export const middlewares = t.middleware;
+
