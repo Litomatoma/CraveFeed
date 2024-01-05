@@ -236,5 +236,62 @@ export const userRouter = router({
             });
             return newComment;
         }),
+    likePost: publicProcedure
+        .input(z.object({
+            userId: z.number(),
+            postId: z.number(),
+        }))
+        .mutation(async (opts) => {
+            const { userId, postId } = opts.input;
+            const user = await opts.ctx.prisma.User.findUnique({  //Can be removed
+                where: { id: userId },
+            });
+            const post = await opts.ctx.prisma.Post.findUnique({ //Can be removed
+                where: { id: postId },
+            });
+            if (!user || !post) {                                        //Can be removed
+                throw new Error("User or post not found");
+            }
+            const existingLike = await opts.ctx.prisma.Like.findFirst({ //
+                where: {
+                    userId,
+                    postId,
+                },
+            });
+            if (existingLike) {
+                throw new Error("User has already liked the post");
+            }
+            await opts.ctx.prisma.Like.create({  // Liked a new post
+                data: {
+                    userId,
+                    postId,
+                },
+            });
+            await opts.ctx.prisma.Post.update({  //Updating the no of
+                where: { id: postId },
+                data: {
+                    likeCount: {
+                        increment: 1,
+                    },
+                },
+            });
+        }),
+    getLikedPosts: publicProcedure
+        .input(z.object({
+            userId: z.number(),
+        }))
+        .query(async (opts) => {
+            const { userId } = opts.input;
 
+            // Retrieve the user
+            const user = await opts.ctx.prisma.User.findUnique({
+                where: { id: userId },
+                include: { Likes: { include: { Post: true } } },
+            });
+            if (!user) {
+                throw new Error("User not found");
+            }
+            const likedPosts = user.Likes.map((like) => like.Post);
+            return likedPosts;
+        }),
 })

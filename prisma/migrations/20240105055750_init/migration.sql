@@ -20,6 +20,7 @@ CREATE TABLE "Post" (
     "caption" TEXT,
     "image" TEXT,
     "Location" TEXT,
+    "likeCount" INTEGER NOT NULL DEFAULT 0,
 
     CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
 );

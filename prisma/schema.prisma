@@ -37,6 +37,7 @@ model Post {
   caption         String?
   image           String?
   Location        String?
+  likeCount       Int               @default(0)
   Likes           Like[]
   Comments        Comment[]
   // Restaurant      Restaurant        @relation(fields: [restaurantId], references: [id])
