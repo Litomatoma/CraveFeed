@@ -1,0 +1,42 @@
+.follower-main-div{
+    margin: 2vh 10vh;
+    height: 61vh;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.follower-main-div::-webkit-scrollbar {
+    display: none;
+}
+
+.follower-main-div > div {
+    display: flex;
+    margin-top: 2vh;
+    border-radius: 30px;
+    background-color: rgb(224, 224, 224);
+    padding-bottom: 1vh;
+    margin-bottom: 3vh;
+}
+
+.follower-main-div > div > button {
+    background-color: rgb(248, 193, 193);
+    border-radius: 10vh;
+    margin-top: 3vh;
+    margin-left: 40vh;
+    height: 6vh;
+    width: 25vh;
+}
+
+.follower-profile > h1 {
+    font-weight: bold;
+    margin-top: 3vh;
+    margin-left: 2vh;
+    font-size: 20px;
+}
+
+.follower-profile > h2 {
+    margin-left: 2vh;
+    font-size: 17px;
+    color: rgba(0, 0, 0, 0.597);
+}

@@ -1,20 +1,18 @@
-import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
-import { appRouter } from "@/server";
+import { appRouter } from '@/trpc';
+import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 import { PrismaClient } from "@prisma/client";
+import providers from "@/components/Providers";
 
 let prisma = new PrismaClient
 
-const createContext = () => ({
-    prisma: { User : prisma.user}
-  });
-
-
-const handler = (req: Request) =>
+const handler = (req : Request) =>
     fetchRequestHandler({
-        endpoint: "api/trpc",
         req,
+        endpoint: '/api/trpc',
         router: appRouter,
-        createContext,
-    })
+        createContext: ()=> ({
+            prisma: { Usera : prisma.usera , Post: prisma.post, Follower: prisma.follower, Like: prisma.like, Comment: prisma.comment, UserAuth: prisma.user}
+        }),
+    });
 
-export { handler as GET , handler as POST}
+export { handler as GET, handler as POST};
